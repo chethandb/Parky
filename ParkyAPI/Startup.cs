@@ -8,8 +8,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using ParkyAPI.Data;
+using ParkyAPI.ParkyMapper;
 using ParkyAPI.Repository;
 using ParkyAPI.Repository.IRepository;
+using AutoMapper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,6 +38,9 @@ namespace ParkyAPI
                 );
 
             services.AddScoped<INationalParkRepository, NationalParkRepository>();
+
+            // adding auto mapper mappings
+            services.AddAutoMapper(typeof(ParkyMappings));
 
             services.AddControllers();
         }
