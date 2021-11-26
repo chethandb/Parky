@@ -67,7 +67,7 @@ namespace ParkyAPI.Controllers
 
             if (_nationalParkRepository.NationalParkExists(nationalParkDTO.Name))
             {
-                ModelState.AddModelError("", "National Park is already present");
+                ModelState.AddModelError("", "National Park exists!");
                 return StatusCode(404, ModelState);
             }
 
@@ -80,6 +80,24 @@ namespace ParkyAPI.Controllers
             }
 
             return CreatedAtRoute("GetNationalPark", new { nationalParkId = nationalParkObj.Id }, nationalParkObj);
+        }
+
+        [HttpPatch("{nationalParkId:int}", Name = "UpdateNationalPark")]
+        public IActionResult UpdateNationalPark(int nationalParkId, [FromBody] NationalParkDTO nationalParkDTO)
+        {
+            if(nationalParkDTO == null || nationalParkId != nationalParkDTO.Id)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var nationalParkObj = _mapper.Map<NationalPark>(nationalParkDTO);
+            if (!_nationalParkRepository.UpdateNationalPark(nationalParkObj))
+            {
+                ModelState.AddModelError("", $"Something went wrong while updating the record {nationalParkObj.Name}");
+                return StatusCode(500, ModelState);
+            }
+
+            return NoContent();
         }
     }
 }
