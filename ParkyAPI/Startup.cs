@@ -40,6 +40,7 @@ namespace ParkyAPI
                 );
 
             services.AddScoped<INationalParkRepository, NationalParkRepository>();
+            services.AddScoped<ITrailRepository, TrailRepository>();
 
             // adding auto mapper mappings
             services.AddAutoMapper(typeof(ParkyMappings));
