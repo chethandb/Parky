@@ -11,8 +11,10 @@ using System.Threading.Tasks;
 
 namespace ParkyAPI.Controllers
 {
-    [Route("api/Trails")]
+    [Route("api/v{version:apiVersion}/trails")]
+    //[Route("api/Trails")]
     [ApiController]
+    //[ApiExplorerSettings(GroupName = "ParkyOpenAPISpecTrails")]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public class TrailsController : Controller
     {
@@ -69,6 +71,36 @@ namespace ParkyAPI.Controllers
             var objDTO = _mapper.Map<TrailDTO>(obj);
 
             return Ok(objDTO);
+        }
+
+
+        /// <summary>
+        /// Get trails for given national park
+        /// </summary>
+        /// <param name="nationalParkId"></param>
+        /// <returns></returns>
+        [HttpGet("[action]/{nationalParkId:int}")]
+        // [HttpGet("GetTrailInNationalPark/{nationalParkId:int}")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(TrailDTO))]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesDefaultResponseType]
+        public IActionResult GetTrailInNationalPark(int nationalParkId)
+        {
+            var objList = _trailRepository.GetTrailsInNationalPark(nationalParkId);
+
+            if (objList == null)
+            {
+                return NotFound();
+            }
+
+            var objDto = new List<TrailDTO>();
+
+            foreach (var obj in objList)
+            {
+                objDto.Add(_mapper.Map<TrailDTO>(obj));
+            }            
+
+            return Ok(objDto);
         }
 
 
