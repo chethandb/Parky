@@ -11,7 +11,9 @@ using System.Threading.Tasks;
 
 namespace ParkyAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/v{version:apiVersion}/nationalparks")]
+    [ApiVersion("2.0")]
+    //[Route("api/[controller]")]
     [ApiController]
     //[ApiExplorerSettings(GroupName = "ParkyOpenAPISpecNP")]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -36,17 +38,19 @@ namespace ParkyAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type =typeof(List<NationalParkDTO>))]
         [ProducesDefaultResponseType]
         public IActionResult GetNationalParks()
-        {
-            var objList = _nationalParkRepository.GetNationalParks();
+        {           
 
-            var objDTO = new List<NationalParkDTO>();
+            var obj = _nationalParkRepository.GetNationalParks()?.FirstOrDefault();
 
-            foreach (var item in objList)
-            {
-                objDTO.Add(_mapper.Map<NationalParkDTO>(item));
-            }
+            // changes to differentiate api versions
+            //var objList = _nationalParkRepository.GetNationalParks();
+            //var objDTO = new List<NationalParkDTO>();
+            //foreach (var item in objList)
+            //{
+            //    objDTO.Add(_mapper.Map<NationalParkDTO>(item));
+            //}
 
-            return Ok(objDTO);
+            return Ok(_mapper.Map<NationalParkDTO>(obj));
         }
        
     }
