@@ -11,6 +11,7 @@ using ParkyAPI.Repository.IRepository;
 using System;
 using System.Reflection;
 using System.IO;
+using Microsoft.AspNetCore.Mvc;
 
 namespace ParkyAPI
 {
@@ -37,6 +38,15 @@ namespace ParkyAPI
 
             // adding auto mapper mappings
             services.AddAutoMapper(typeof(ParkyMappings));
+
+            // adding versioning config settings
+            services.AddApiVersioning(options =>
+            {
+                options.AssumeDefaultVersionWhenUnspecified = true;
+                options.DefaultApiVersion = new ApiVersion(1, 0);
+                options.ReportApiVersions = true;
+            });
+
             services.AddSwaggerGen(options =>
             {
                 options.SwaggerDoc("ParkyOpenAPISpec", new Microsoft.OpenApi.Models.OpenApiInfo()
