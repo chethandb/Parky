@@ -1,10 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ParkyWebMVC.Models;
 using ParkyWebMVC.Repository.IRepository;
-using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace ParkyWebMVC.Controllers
