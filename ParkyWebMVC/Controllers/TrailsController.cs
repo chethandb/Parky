@@ -38,7 +38,8 @@ namespace ParkyWebMVC.Controllers
                 {
                     Text = i.Name,
                     Value = i.Id.ToString()
-                })
+                }),
+                Trail = new Trail()
             };
 
             // for create
