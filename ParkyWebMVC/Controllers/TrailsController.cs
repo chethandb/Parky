@@ -82,7 +82,7 @@ namespace ParkyWebMVC.Controllers
 
         public async Task<IActionResult> GetAllTrail()
         {
-            return Json(new { data = await _nationalParkRepository.GetAllAsync(StaticDetails.TrailAPIPath) });
+            return Json(new { data = await _trailRepository.GetAllAsync(StaticDetails.TrailAPIPath) });
         }
 
         [HttpDelete]

@@ -7,21 +7,23 @@ $(document).ready(function () {
 function loadDataTable() {
     dataTable = $('#tblData').DataTable({
         "ajax": {
-            "url": "/nationalParks/GetAllNationalPark",
+            "url": "/trails/GetAllTrail",
             "type": "GET",
             "datatype":"json"
         },
         "columns": [
-            { "data": "name", "width": "50%" },
-            { "data": "state", "width": "20%" },
+            { "data": "nationalPark.name", "width": "25%" },
+            { "data": "name", "width": "20%" },
+            { "data": "distance", "width": "15%" },
+            { "data": "elevation", "width": "15%" },
             {
                 "data": "id",
                 "render": function (data) {
                     return `<div class="text-center">
-                                <a href="/nationalParks/Upsert/${data}" class='btn btn-success text-white'
+                                <a href="/trails/Upsert/${data}" class='btn btn-success text-white'
                                     style='cursor:pointer;'> <i class='far fa-edit'></i></a>
                                     &nbsp;
-                                <a onclick=Delete("/nationalParks/Delete/${data}") class='btn btn-danger text-white'
+                                <a onclick=Delete("/trails/Delete/${data}") class='btn btn-danger text-white'
                                     style='cursor:pointer;'> <i class='far fa-trash-alt'></i></a>
                                 </div>
                             `;
